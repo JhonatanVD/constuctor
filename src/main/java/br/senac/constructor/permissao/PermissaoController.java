@@ -18,6 +18,7 @@ public class PermissaoController{
     public ResponseEntity<PermissaoRepresentation.Detalhes> criarPermissao(
             @RequestBody @Valid PermissaoRepresentation.CriarOuAtualizar criar){
 
+
         Permissao permissao = this.permissaoService.criarPermissao(criar);
 
         PermissaoRepresentation.Detalhes detalhes = PermissaoRepresentation.Detalhes.from(permissao);
