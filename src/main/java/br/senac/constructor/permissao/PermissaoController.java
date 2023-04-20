@@ -15,13 +15,12 @@ public class PermissaoController{
     private PermissaoService permissaoService;
 
     @PostMapping("/")
-    public ResponseEntity<PermissaoRepresentation.Dettalhes> criarPermissao(
+    public ResponseEntity<PermissaoRepresentation.Detalhes> criarPermissao(
             @RequestBody @Valid PermissaoRepresentation.CriarOuAtualizar criar){
 
         Permissao permissao = this.permissaoService.criarPermissao(criar);
 
-        return null;
-
+        PermissaoRepresentation.Detalhes detalhes = PermissaoRepresentation.Detalhes.from(permissao);
+        return ResponseEntity.ok(detalhes);
     }
-
 }
