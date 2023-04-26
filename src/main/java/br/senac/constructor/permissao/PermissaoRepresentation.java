@@ -25,7 +25,7 @@ public interface PermissaoRepresentation{
         private Long id;
         private String nome;
 
-        static PermissaoRepresentation.Detalhes from(Permissao permissao) {
+        public static PermissaoRepresentation.Detalhes from(Permissao permissao) {
             return PermissaoRepresentation.Detalhes.builder()
                     .id(permissao.getId())
                     .nome(permissao.getNome())

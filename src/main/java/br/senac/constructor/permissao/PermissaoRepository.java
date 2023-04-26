@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.Entity;
 
-@Repository
+
 public interface PermissaoRepository extends PagingAndSortingRepository<Permissao , Long>,
         QuerydslPredicateExecutor<Permissao> {
 }
