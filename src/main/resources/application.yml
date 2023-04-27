@@ -2,3 +2,15 @@ server:
   port: 8080
   servlet:
     context-path: /constructor
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    generate-sql: false
+    open-in-view: false
