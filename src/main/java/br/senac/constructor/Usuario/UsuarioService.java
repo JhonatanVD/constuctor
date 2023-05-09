@@ -57,7 +57,10 @@ public class UsuarioService {
         if (usuarioAtual.isPresent()) {
             return usuarioAtual.get();
         } else {
-            throw new NotFoundException("Usuário não encontrada");
+            throw new NotFoundException("Usuário não encontrado");
         }
+    }
+    public void excluir(Long idUsuario) {
+        usuarioRepository.excluir(idUsuario);
     }
 }

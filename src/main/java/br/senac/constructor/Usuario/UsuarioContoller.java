@@ -1,6 +1,7 @@
 package br.senac.constructor.Usuario;
 
 
+import br.senac.constructor.exceptions.NotFoundException;
 import br.senac.constructor.permissao.Permissao;
 import br.senac.constructor.permissao.PermissaoRepresentation;
 import br.senac.constructor.utils.Paginacao;
@@ -23,6 +24,7 @@ import java.util.Objects;
 public class UsuarioContoller {
 
     private UsuarioService usuarioService;
+    private UsuarioRepository usuarioRepository;
 
     @PostMapping("/")
      public ResponseEntity<UsuarioRepresentation.Detalhes> criarUsuario
@@ -71,10 +73,12 @@ public class UsuarioContoller {
         UsuarioRepresentation.Detalhes detalhes = UsuarioRepresentation.Detalhes.from(usuario);
         return ResponseEntity.ok(detalhes);
     }
-
     @DeleteMapping("{idUsuario}")
-    public ResponseEntity<UsuarioRepresentation.Excluir> excluirUsuario(@PathVariable Long idUsuario){
-        return null;
-    }
+        public ResponseEntity excluirUsuario(@PathVariable Long idUsuario){
+        Usuario usuario = this.usuarioRepository.findOne(UsuarioRepresentation.excluir.id.eq(idUsuario))
+                .orElseThrow(() -> new NotFoundException("Usuario não encontrado"));
 
+            this.usuarioRepository.delete(usuario);
+            return ResponseEntity.noContent().build();
+    }
 }
