@@ -1,11 +1,9 @@
 package br.senac.constructor.permissao;
 
 import br.senac.constructor.exceptions.NotFoundException;
-import com.querydsl.core.types.Operation;
 import com.querydsl.core.types.Predicate;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.annotations.NotFound;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;

@@ -17,13 +17,13 @@ public class PrestadorController {
     private PrestadorService prestadorService;
 
     @PostMapping
-    public ResponseEntity<Per.Detalhes> criarPermissao(
-            @RequestBody @Valid PermissaoRepresentation.CriarOuAtualizar criar){
+    public ResponseEntity<PrestadorRepresentation.Detalhes> criarPrestador(
+            @RequestBody @Valid PrestadorRepresentation.CriarOuAtualizar criar){
 
 
-        Permissao permissao = this.permissaoService.criarPermissao(criar);
+        Prestador prestador = this.prestadorService.criarPrestador(criar);
 
-        PermissaoRepresentation.Detalhes detalhes = PermissaoRepresentation.Detalhes.from(permissao);
+        PrestadorRepresentation.Detalhes detalhes = PrestadorRepresentation.Detalhes.from(prestador);
         return ResponseEntity.ok(detalhes);
     }
 }

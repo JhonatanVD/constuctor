@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -74,11 +75,9 @@ public class UsuarioContoller {
         return ResponseEntity.ok(detalhes);
     }
     @DeleteMapping("{idUsuario}")
-        public ResponseEntity excluirUsuario(@PathVariable Long idUsuario){
-        Usuario usuario = this.usuarioRepository.findOne(UsuarioRepresentation.excluir.id.eq(idUsuario))
-                .orElseThrow(() -> new NotFoundException("Usuario não encontrado"));
+    public ResponseEntity excluirUsuario(@PathVariable("id") Long id){
+        this.usuarioService.excluir(id);
 
-            this.usuarioRepository.delete(usuario);
-            return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

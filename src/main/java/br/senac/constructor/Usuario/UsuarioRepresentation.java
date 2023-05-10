@@ -1,6 +1,7 @@
 package br.senac.constructor.Usuario;
 
 
+import br.senac.constructor.utils.StatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,7 +34,7 @@ public interface UsuarioRepresentation {
         @Size(min = 6, max = 20, message = "Confirmar senha é obrigatoŕio!")
         private String senha;
         private String confirmarSenha;
-        private String status;
+        private StatusEnum status;
         private String criadoEM;
         private String attEM;
     }
@@ -44,7 +45,7 @@ public interface UsuarioRepresentation {
         private String nome;
         private String senha;
         private String confirmarSenha;
-        private String status;
+        private StatusEnum status;
         private String criadoEM;
         private String attEM;
 
@@ -54,7 +55,7 @@ public interface UsuarioRepresentation {
                     .nome(usuario.getNome())
                     .senha(usuario.getSenha())
                     .confirmarSenha(usuario.getConfirmarSenha())
-                    .status(usuario.getStatus())
+                    .status(StatusEnum.ATIVO)
                     .criadoEM(usuario.getCriadoEm())
                     .attEM(usuario.getAttEm())
                     .build();
@@ -67,7 +68,7 @@ public interface UsuarioRepresentation {
         private String nome;
         private String senha;
         private String confirmarSenha;
-        private String status;
+        private StatusEnum status;
         private String criadoEM;
         private String attEM;
         private static UsuarioRepresentation.Lista from(Usuario usuario){
@@ -76,7 +77,7 @@ public interface UsuarioRepresentation {
                     .nome(usuario.getNome())
                     .senha(usuario.getSenha())
                     .confirmarSenha(usuario.getConfirmarSenha())
-                    .status(usuario.getStatus())
+                    .status(StatusEnum.ATIVO)
                     .criadoEM(usuario.getCriadoEm())
                     .attEM(usuario.getAttEm())
                     .build();
@@ -89,12 +90,4 @@ public interface UsuarioRepresentation {
                     .collect(Collectors.toList());
         }
     }
-        class excluir{
-            private Long id;
-            public static UsuarioRepresentation.Lista from(Usuario usuario){
-                return UsuarioRepresentation.Lista.builder()
-                        .id(usuario.getId())
-                        .build();
-        }
-   }
 }
