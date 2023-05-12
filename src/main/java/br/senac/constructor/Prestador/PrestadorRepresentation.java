@@ -2,6 +2,7 @@ package br.senac.constructor.Prestador;
 
 import br.senac.constructor.Usuario.Usuario;
 import br.senac.constructor.Usuario.UsuarioRepresentation;
+import br.senac.constructor.utils.StatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,12 +31,14 @@ public interface PrestadorRepresentation {
         private Long id;
         private String contato;
         private String cpf;
+        private StatusEnum status;
 
         public static PrestadorRepresentation.Detalhes from(Prestador prestador){
             return Detalhes.builder()
                     .id(prestador.getId())
                     .contato(prestador.getContato())
                     .cpf(prestador.getCpf())
+                    .status(StatusEnum.ATIVO)
                     .build();
         }
     }
@@ -46,12 +49,14 @@ public interface PrestadorRepresentation {
         private Long id;
         private String contato;
         private String cpf;
+        private StatusEnum status;
 
         private static PrestadorRepresentation.Lista from(Prestador prestador){
             return PrestadorRepresentation.Lista.builder()
                     .id(prestador.getId())
                     .contato(prestador.getContato())
                     .cpf(prestador.getCpf())
+                    .status(StatusEnum.ATIVO)
                     .build();
         }
         public static List<PrestadorRepresentation.Lista> from(List<Prestador> PrestadorList){

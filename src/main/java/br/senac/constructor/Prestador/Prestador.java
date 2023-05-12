@@ -1,6 +1,7 @@
 package br.senac.constructor.Prestador;
 
 
+import br.senac.constructor.utils.StatusEnum;
 import lombok.*;
 
 
@@ -26,5 +27,8 @@ public class Prestador {
     @Column(name = "contato")
     private String contato;
 
+    @NotNull(message = "O campo status não pode ser nulo")
+    @Column(name= "status")
+    private StatusEnum status;
 
 }
