@@ -1,6 +1,7 @@
 package br.senac.constructor.Usuario;
 
 import br.senac.constructor.exceptions.NotFoundException;
+import br.senac.constructor.utils.StatusEnum;
 import com.querydsl.core.types.Predicate;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,13 +9,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
+
 import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 @Slf4j
 public class UsuarioService {
+
 
     private UsuarioRepository usuarioRepository;
 
@@ -26,7 +28,7 @@ public class UsuarioService {
                         .attEm(criar.getAttEM())
                         .senha(criar.getSenha())
                         .confirmarSenha(criar.getConfirmarSenha())
-                        .status(criar.getStatus())
+                        .status(StatusEnum.ATIVO)
                 .build());
     }
     public Page<Usuario> buscarTodos(Pageable pageable){
@@ -40,7 +42,7 @@ public class UsuarioService {
                 .id(idUsuario)
                 .nome(atualizar.getNome())
                 .email(atualizar.getEmail())
-                .status(atualizar.getStatus())
+                .status(StatusEnum.ATIVO)
                 .criadoEm(atualizar.getCriadoEM())
                 .attEm(atualizar.getAttEM())
                 .senha(atualizar.getSenha())
@@ -60,7 +62,10 @@ public class UsuarioService {
             throw new NotFoundException("Usuário não encontrado");
         }
     }
-    public void excluir(Long idUsuario) {
-        usuarioRepository.excluir(idUsuario);
+    public void excluir(Long id){
+        Usuario usuario = this.getUsario(id);
+        usuario.setStatus(StatusEnum.INATIVO);
+        this.usuarioRepository.save(usuario);
     }
+
 }

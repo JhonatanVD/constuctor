@@ -1,12 +1,20 @@
 package br.senac.constructor.Prestador;
 
-import br.senac.constructor.permissao.Permissao;
-import br.senac.constructor.permissao.PermissaoRepresentation;
+import br.senac.constructor.Usuario.Usuario;
+import br.senac.constructor.Usuario.UsuarioRepresentation;
+import br.senac.constructor.utils.Paginacao;
+import com.querydsl.core.types.Predicate;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("api/Prestador")
@@ -17,13 +25,59 @@ public class PrestadorController {
     private PrestadorService prestadorService;
 
     @PostMapping
-    public ResponseEntity<Per.Detalhes> criarPermissao(
-            @RequestBody @Valid PermissaoRepresentation.CriarOuAtualizar criar){
+    public ResponseEntity<PrestadorRepresentation.Detalhes> criarPrestador(
+            @RequestBody @Valid PrestadorRepresentation.CriarOuAtualizar criar){
 
 
-        Permissao permissao = this.permissaoService.criarPermissao(criar);
+        Prestador prestador = this.prestadorService.criarPrestador(criar);
 
-        PermissaoRepresentation.Detalhes detalhes = PermissaoRepresentation.Detalhes.from(permissao);
+        PrestadorRepresentation.Detalhes detalhes = PrestadorRepresentation.Detalhes.from(prestador);
         return ResponseEntity.ok(detalhes);
     }
+    @GetMapping("/all2")
+    public ResponseEntity<Paginacao> buscarUsuario(
+            @QuerydslPredicate(root = Prestador.class) Predicate filtroURI,
+            @RequestParam(name = "tamanhoPagina", defaultValue = "30") int tamanhoPagina,
+            @RequestParam(name = "paginaSelecionada", defaultValue = "0") int paginaSelecionada){
+        Pageable pageable = PageRequest.of(paginaSelecionada, tamanhoPagina);
+
+        Page<Prestador> prestadorList = Objects.isNull(filtroURI)?
+                this.prestadorService.buscarTodos(pageable):
+                this.prestadorService.buscarTodos(filtroURI, pageable);
+
+        Paginacao paginacao = Paginacao.builder()
+                .paginaSelecionada(paginaSelecionada)
+                .tamanhoPagina(tamanhoPagina)
+                .totalRegistros(prestadorList.getTotalElements())
+                .proximaPagina(prestadorList.hasNext())
+                .conteudo(PrestadorRepresentation.Lista
+                        .from(prestadorList.getContent()))
+                .build();
+
+        return ResponseEntity.ok(paginacao);
+    }
+    @GetMapping("/{idPrestador}")
+    public ResponseEntity<PrestadorRepresentation.Detalhes> buscarUmPrestador(
+            @PathVariable Long idPrestador){
+        Prestador prestador = this.prestadorService.buscarUmPrestador(idPrestador);
+
+        PrestadorRepresentation.Detalhes detalhes = PrestadorRepresentation.Detalhes.from(prestador);
+        return ResponseEntity.ok(detalhes);
+    }
+
+    @PutMapping("/{idPrestador}")
+    public ResponseEntity<PrestadorRepresentation.Detalhes> atualizarPrestador(@PathVariable Long idPrestador, @RequestBody PrestadorRepresentation.CriarOuAtualizar atualizar){
+        Prestador prestadorAtualizado = this.prestadorService.atualizar(idPrestador, atualizar);
+        PrestadorRepresentation.Detalhes detalhes = PrestadorRepresentation.Detalhes.from(prestadorAtualizado);
+
+        return ResponseEntity.ok(detalhes);
+    }
+
+    @DeleteMapping("{idPrestador}")
+    public ResponseEntity excluirPrestador(@PathVariable("id")Long id){
+        this.prestadorService.excluir(id);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
+

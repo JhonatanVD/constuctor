@@ -1,6 +1,7 @@
 package br.senac.constructor.Usuario;
 
 
+import br.senac.constructor.utils.StatusEnum;
 import lombok.*;
 
 import javax.persistence.*;
@@ -38,8 +39,9 @@ public class Usuario{
     @NotNull(message = "A confirmação de senha é obrigatoria")
     private String confirmarSenha;
 
+    @NotNull(message = "O campo status não pode ser nulo")
     @Column(name= "status")
-    private String status;
+    private StatusEnum status;
 
     @Column(name= "criadoEm")
     private String criadoEm;
