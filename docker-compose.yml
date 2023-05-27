@@ -1,0 +1,16 @@
+version: '3'
+services:
+  postgres-tcs:
+    image: postgres:alpine
+    ports:
+      - 5432:5432
+    container_name: 'postgres-database'
+    restart: always
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: constructor
+volumes:
+  pg-data:

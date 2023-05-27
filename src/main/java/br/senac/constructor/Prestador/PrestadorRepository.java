@@ -1,4 +1,4 @@
-package br.senac.constructor.prestadorServico;
+package br.senac.constructor.Prestador;
 
 import br.senac.constructor.permissao.Permissao;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;

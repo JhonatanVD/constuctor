@@ -1,4 +1,4 @@
-package br.senac.constructor.prestadorServico;
+package br.senac.constructor.Prestador;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package br.senac.constructor.utils;
 
-public enum Tipo_servico {
+public enum TipoServico {
     PEDREIRO,
     PINTOR,
     ELETRICISTA,

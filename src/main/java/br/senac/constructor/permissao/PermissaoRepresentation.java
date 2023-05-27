@@ -5,7 +5,8 @@ import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 public interface PermissaoRepresentation{
@@ -42,6 +43,13 @@ public interface PermissaoRepresentation{
                     .id(permissao.getId())
                     .nome(permissao.getNome())
                     .build();
+        }
+
+        public static List<Lista> from(List<Permissao> permissoes){
+            return permissoes
+                    .stream()
+                    .map(Lista::from)
+                    .collect(Collectors.toList());
         }
     }
 }

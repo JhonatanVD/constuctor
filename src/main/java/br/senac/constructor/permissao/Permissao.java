@@ -23,4 +23,5 @@ public class Permissao {
     @NotNull(message = " O nome não pode ser nulo")
     @NotEmpty (message = " O nome não pode ser vazio")
     private String nome ;
+
 }
