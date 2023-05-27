@@ -1,4 +1,4 @@
-package br.senac.constructor.prestadorServico.utils;
+package br.senac.constructor.utils;
 
 public enum Tipo_servico {
     PEDREIRO,

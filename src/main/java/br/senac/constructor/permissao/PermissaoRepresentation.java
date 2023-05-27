@@ -7,44 +7,45 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class PermissaoRepresentation{
 
+public interface PermissaoRepresentation{
+
+    @Data
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
     class CriarOuAtualizar{
         @NotNull(message = " O nome não pode ser nulo!")
-        @NotEmpty(message = "O nome não pode ser vazio!" )
+        @NotEmpty(message = "O nome não pode ser vazio!")
         private String nome;
-
     }
     @Data
     @Builder
-    class Dettalhes {
+    class Detalhes {
         private Long id;
         private String nome;
 
-        private static PermissaoRepresentation.Dettalhes from(Permissao permissao) {
-            return PermissaoRepresentation.Dettalhes.builder()
+        public static PermissaoRepresentation.Detalhes from(Permissao permissao) {
+            return PermissaoRepresentation.Detalhes.builder()
                     .id(permissao.getId())
                     .nome(permissao.getNome())
                     .build();
         }
-
     }
-        @Data
-        @Builder
-        class Lista{
-            private Long id;
-            private String nome;
-            private static PermissaoRepresentation.Lista from(Permissao permissao){
-                return Lista.builder()
-                        .id(permissao.getId())
-                        .nome(permissao.getNome())
-                        .build();
-            }
-
+    @Data
+    @Builder
+    class Lista{
+        private Long id;
+        private String nome;
+        private static PermissaoRepresentation.Lista from(Permissao permissao){
+            return PermissaoRepresentation.Lista.builder()
+                    .id(permissao.getId())
+                    .nome(permissao.getNome())
+                    .build();
         }
-
+    }
 }
+
+
+
+
