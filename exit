@@ -1,0 +1,23 @@
+[33mcommit 4f9048f2fb190cb0db56700f49be321f2e6f1fe3[m[33m ([m[1;36mHEAD -> [m[1;32mCadastro[m[33m)[m
+Author: Jhonatan Duarte <jhonatanvitalis123@hotmail.com>
+Date:   Wed Apr 5 14:18:55 2023 -0300
+
+    Inicio de criação CRUD de permissao
+
+[33mcommit ae2a80ab8bc265f9cc6bf7841dd4952be2de4882[m
+Author: Jhonatan Duarte <jhonatanvitalis123@hotmail.com>
+Date:   Tue Apr 4 14:19:02 2023 -0300
+
+    Classe de prestador de serviço completa e incinando etapas do crud
+
+[33mcommit 791259be26de505f08ec4fd5b8a696e0c9b9481b[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mteste[m[33m, [m[1;32mmain[m[33m)[m
+Author: Jhonatan Duarte <jhonatanvitalis123@hotmail.com>
+Date:   Mon Mar 27 19:02:19 2023 -0300
+
+    Setup inicial
+
+[33mcommit 42d27f8ce9c2fd6dd8c15e67212169ce791114ac[m
+Author: JhonatanVD <100449168+JhonatanVD@users.noreply.github.com>
+Date:   Mon Mar 27 18:36:08 2023 -0300
+
+    Initial commit
