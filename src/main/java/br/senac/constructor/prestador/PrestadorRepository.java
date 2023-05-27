@@ -1,9 +1,9 @@
-package br.senac.constructor.Prestador;
+package br.senac.constructor.prestador;
 
-import br.senac.constructor.permissao.Permissao;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface PrestadorRepository extends PagingAndSortingRepository<Prestador, Long>,
         QuerydslPredicateExecutor<Prestador> {
+    boolean findByUsuario(Long id);
 }

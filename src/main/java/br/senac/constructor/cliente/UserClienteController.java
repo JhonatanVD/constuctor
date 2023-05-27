@@ -14,7 +14,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/cliente")
+@RequestMapping("/api/cliente")
 @CrossOrigin("*")
 @AllArgsConstructor
 @Builder
@@ -23,7 +23,7 @@ public class UserClienteController {
     private UserClienteService userService;
 
 
-    @GetMapping("/")
+    @GetMapping("/all")
     @ApiOperation(value = "Get all users", response = List.class)
     public List<UserCliente> getAllUsers() {
         return userService.getAllUsers();
@@ -36,10 +36,10 @@ public class UserClienteController {
         return ResponseEntity.ok(user);
     }
 
-    @PostMapping("/")
+    @PostMapping
     @ApiOperation(value = "create", response = UserCliente.class)
-    public ResponseEntity<UserCliente> createUser(@RequestBody UserCliente user) {
-        UserCliente createdUser = userService.createUser(user);
+    public ResponseEntity<UserCliente> createUser(@RequestBody ClienteRepresentation.CriarOuAtualizar cliente) {
+        UserCliente createdUser = userService.createUser(cliente);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(createdUser.getId())

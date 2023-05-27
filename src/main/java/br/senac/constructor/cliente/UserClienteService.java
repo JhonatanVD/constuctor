@@ -1,6 +1,8 @@
 package br.senac.constructor.cliente;
 
 
+import br.senac.constructor.usuario.Usuario;
+import br.senac.constructor.usuario.UsuarioService;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +19,7 @@ import java.util.List;
 public class UserClienteService {
     @Autowired
     private UserClienteRepository userRepository;
+    private final UsuarioService usuarioService;
 
     public List<UserCliente> getAllUsers() {
         return userRepository.findAll();
@@ -27,14 +30,22 @@ public class UserClienteService {
                 .orElseThrow(() -> new EntityNotFoundException("UserCliente with id " + id + " not found"));
     }
 
-    public UserCliente createUser(UserCliente user) {
-        return userRepository.save(user);
+    public UserCliente createUser(ClienteRepresentation.CriarOuAtualizar criarOuAtualizar) {
+        Usuario usuario = this.usuarioService.buscarUmUsuario(criarOuAtualizar.getUsuario());
+
+        UserCliente userCliente = UserCliente.builder()
+                .contato(criarOuAtualizar.getContato())
+                .documento(criarOuAtualizar.getDocumento())
+                .usuario(usuario)
+                .build();
+
+        return userRepository.save(userCliente);
     }
 
     public UserCliente updateUser(Long id, UserCliente user) {
         UserCliente existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("UserCliente with id " + id + " not found"));
-        existingUser.setCpf(user.getCpf());
+        existingUser.setDocumento(user.getDocumento());
         existingUser.setContato(user.getContato());
         return userRepository.save(existingUser);
     }

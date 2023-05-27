@@ -1,12 +1,14 @@
-package br.senac.constructor.Usuario;
+package br.senac.constructor.usuario;
 
 
+import br.senac.constructor.permissao.Permissao;
 import br.senac.constructor.utils.StatusEnum;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.security.cert.CertPathBuilder;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Setter
 @Getter
@@ -18,7 +20,7 @@ import java.security.cert.CertPathBuilder;
 public class Usuario{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "nome")
@@ -32,8 +34,8 @@ public class Usuario{
 
     @Column(name= "senha")
     @Size(min = 6, max = 20, message = "A senha deve ter entre 6 e 20 caracteres")
+    @NotNull(message = "A senha é obrigatória")
     private String senha;
-
 
     @Column(name= "confirmarSenha")
     @NotNull(message = "A confirmação de senha é obrigatoria")
@@ -44,11 +46,12 @@ public class Usuario{
     private StatusEnum status;
 
     @Column(name= "criadoEm")
-    private String criadoEm;
+    private LocalDate criadoEm;
 
     @Column(name= "attEm")
-    private String attEm;
+    private LocalDate attEm;
 
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_permissao")
+    private Permissao permissao;
 }
-
-

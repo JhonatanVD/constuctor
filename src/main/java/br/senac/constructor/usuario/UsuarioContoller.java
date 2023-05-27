@@ -1,9 +1,7 @@
-package br.senac.constructor.Usuario;
+package br.senac.constructor.usuario;
 
 
-import br.senac.constructor.exceptions.NotFoundException;
-import br.senac.constructor.permissao.Permissao;
-import br.senac.constructor.permissao.PermissaoRepresentation;
+
 import br.senac.constructor.utils.Paginacao;
 import com.querydsl.core.types.Predicate;
 import lombok.AllArgsConstructor;
@@ -19,7 +17,8 @@ import javax.validation.Valid;
 import java.util.Objects;
 
 
-@RequestMapping("api/usuario")
+@RestController
+@RequestMapping("/api/usuario")
 @CrossOrigin("*")
 @AllArgsConstructor
 public class UsuarioContoller {
@@ -36,7 +35,8 @@ public class UsuarioContoller {
        UsuarioRepresentation.Detalhes detalhes = UsuarioRepresentation.Detalhes.from(usuario);
        return ResponseEntity.ok(detalhes);
     }
-    @GetMapping("/all1")
+
+    @GetMapping("/all")
     public ResponseEntity<Paginacao> buscarUsuario(
             @QuerydslPredicate(root = Usuario.class) Predicate filtroURI,
             @RequestParam(name = "tamanhoPagina", defaultValue = "30") int tamanhoPagina,
@@ -65,7 +65,6 @@ public class UsuarioContoller {
 
         return ResponseEntity.ok(detalhes);
     }
-
     @GetMapping("/{idUsuario}")
     public ResponseEntity<UsuarioRepresentation.Detalhes> buscarUmUsuario(
             @PathVariable Long idUsuario){
@@ -74,10 +73,9 @@ public class UsuarioContoller {
         UsuarioRepresentation.Detalhes detalhes = UsuarioRepresentation.Detalhes.from(usuario);
         return ResponseEntity.ok(detalhes);
     }
-    @DeleteMapping("{idUsuario}")
-    public ResponseEntity excluirUsuario(@PathVariable("id") Long id){
+    @DeleteMapping("/{idUsuario}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void excluirUsuario(@PathVariable("idUsuario") Long id){
         this.usuarioService.excluir(id);
-
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

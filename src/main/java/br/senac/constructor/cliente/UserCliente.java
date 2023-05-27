@@ -1,5 +1,6 @@
 package br.senac.constructor.cliente;
 
+import br.senac.constructor.usuario.Usuario;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,9 +18,15 @@ public class UserCliente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "cpf")
-    private String cpf;
+    @Column(name = "documento")
+    private String documento;
 
     @Column(name = "contato")
     private String contato;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_usuario")
+    private Usuario usuario;
+
 }
+

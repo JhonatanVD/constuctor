@@ -1,7 +1,5 @@
-package br.senac.constructor.Prestador;
+package br.senac.constructor.prestador;
 
-import br.senac.constructor.Usuario.Usuario;
-import br.senac.constructor.Usuario.UsuarioRepresentation;
 import br.senac.constructor.utils.Paginacao;
 import com.querydsl.core.types.Predicate;
 import lombok.AllArgsConstructor;
@@ -17,25 +15,23 @@ import javax.validation.Valid;
 import java.util.Objects;
 
 @RestController
-@RequestMapping("api/Prestador")
+@RequestMapping("/api/prestador")
 @CrossOrigin("*")
 @AllArgsConstructor
 public class PrestadorController {
 
     private PrestadorService prestadorService;
-
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<PrestadorRepresentation.Detalhes> criarPrestador(
             @RequestBody @Valid PrestadorRepresentation.CriarOuAtualizar criar){
-
 
         Prestador prestador = this.prestadorService.criarPrestador(criar);
 
         PrestadorRepresentation.Detalhes detalhes = PrestadorRepresentation.Detalhes.from(prestador);
         return ResponseEntity.ok(detalhes);
     }
-    @GetMapping("/all2")
-    public ResponseEntity<Paginacao> buscarUsuario(
+    @GetMapping("/all")
+    public ResponseEntity<Paginacao> buscarPrestador(
             @QuerydslPredicate(root = Prestador.class) Predicate filtroURI,
             @RequestParam(name = "tamanhoPagina", defaultValue = "30") int tamanhoPagina,
             @RequestParam(name = "paginaSelecionada", defaultValue = "0") int paginaSelecionada){
@@ -72,9 +68,8 @@ public class PrestadorController {
 
         return ResponseEntity.ok(detalhes);
     }
-
-    @DeleteMapping("{idPrestador}")
-    public ResponseEntity excluirPrestador(@PathVariable("id")Long id){
+    @DeleteMapping("/{idPrestador}")
+    public ResponseEntity excluirPrestador(@PathVariable("idPrestador") Long id){
         this.prestadorService.excluir(id);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

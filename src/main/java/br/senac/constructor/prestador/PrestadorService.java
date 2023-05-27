@@ -1,7 +1,8 @@
-package br.senac.constructor.Prestador;
+package br.senac.constructor.prestador;
 
-import br.senac.constructor.Usuario.Usuario;
-import br.senac.constructor.exceptions.NotFoundException;
+import br.senac.constructor.usuario.Usuario;
+import br.senac.constructor.usuario.UsuarioService;
+import br.senac.constructor.exception.NotFoundException;
 import br.senac.constructor.utils.StatusEnum;
 import com.querydsl.core.types.Predicate;
 import lombok.AllArgsConstructor;
@@ -18,11 +19,15 @@ import java.util.Optional;
 public class PrestadorService {
 
     private PrestadorRepository prestadorRepository;
+    private UsuarioService usuarioService;
 
     public Prestador criarPrestador(PrestadorRepresentation.CriarOuAtualizar criar){
+        Usuario usuario = this.usuarioService.buscarUmUsuario(criar.getUsuario());
         return this.prestadorRepository.save(Prestador.builder()
                         .contato(criar.getContato())
-                        .cpf(criar.getCpf())
+                        .documento(criar.getDocumento())
+                        .usuario(usuario)
+                        .status(StatusEnum.ATIVO)
                         .build());
     }
     public Page<Prestador> buscarTodos(Pageable pageable){
@@ -32,12 +37,15 @@ public class PrestadorService {
         return this.prestadorRepository.findAll(pageable);
     }
     public Prestador atualizar(Long idPrestador, PrestadorRepresentation.CriarOuAtualizar atualizar){
-        Prestador pretadorParaAtualizar = Prestador.builder()
-                .id(idPrestador)
+        Prestador oldPrestador = this.getPrestador(idPrestador);
+
+        Prestador newPrestador = oldPrestador.toBuilder()
                 .contato(atualizar.getContato())
-                .cpf(atualizar.getCpf())
+                .documento(atualizar.getDocumento())
+                .status(atualizar.getStatus())
                 .build();
-        return this.prestadorRepository.save(pretadorParaAtualizar);
+
+        return this.prestadorRepository.save(newPrestador);
     }
     public Prestador buscarUmPrestador(Long idPrestador){
         return this.getPrestador(idPrestador);
@@ -47,7 +55,7 @@ public class PrestadorService {
         if (prestadorAtual.isPresent()) {
             return prestadorAtual.get();
         } else {
-            throw new NotFoundException("Usuário não encontrado");
+            throw new NotFoundException("Prestador não encontrado");
         }
     }
     public void excluir(Long id){

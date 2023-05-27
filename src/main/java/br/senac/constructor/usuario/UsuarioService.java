@@ -1,6 +1,8 @@
-package br.senac.constructor.Usuario;
+package br.senac.constructor.usuario;
 
-import br.senac.constructor.exceptions.NotFoundException;
+import br.senac.constructor.exception.NotFoundException;
+import br.senac.constructor.permissao.Permissao;
+import br.senac.constructor.permissao.PermissaoService;
 import br.senac.constructor.utils.StatusEnum;
 import com.querydsl.core.types.Predicate;
 import lombok.AllArgsConstructor;
@@ -10,25 +12,28 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 @Slf4j
 public class UsuarioService {
-
-
     private UsuarioRepository usuarioRepository;
+    private PermissaoService permissaoService;
 
     public Usuario criarUsuario(UsuarioRepresentation.CriarOuAtualizar criar){
+        Permissao permissao = this.permissaoService.buscarUmaPermissao(criar.getPermissao());
+
         return this.usuarioRepository.save(Usuario.builder()
                         .nome(criar.getNome())
                         .email(criar.getEmail())
-                        .criadoEm(criar.getCriadoEM())
-                        .attEm(criar.getAttEM())
+                        .criadoEm(LocalDate.now())
                         .senha(criar.getSenha())
                         .confirmarSenha(criar.getConfirmarSenha())
                         .status(StatusEnum.ATIVO)
+                        .permissao(permissao)
                 .build());
     }
     public Page<Usuario> buscarTodos(Pageable pageable){
@@ -42,19 +47,15 @@ public class UsuarioService {
                 .id(idUsuario)
                 .nome(atualizar.getNome())
                 .email(atualizar.getEmail())
-                .status(StatusEnum.ATIVO)
-                .criadoEm(atualizar.getCriadoEM())
-                .attEm(atualizar.getAttEM())
+                .status(atualizar.getStatus())
                 .senha(atualizar.getSenha())
                 .confirmarSenha(atualizar.getConfirmarSenha())
+                .attEm(atualizar.getAttEm())
                 .build();
         return this.usuarioRepository.save(usuarioParaAtualizar);
     }
 
     public Usuario buscarUmUsuario(Long idUsuario){
-        return this.getUsario(idUsuario);
-    }
-    private Usuario getUsario(Long idUsuario) {
         Optional<Usuario> usuarioAtual = this.usuarioRepository.findById(idUsuario);
         if (usuarioAtual.isPresent()) {
             return usuarioAtual.get();
@@ -62,10 +63,10 @@ public class UsuarioService {
             throw new NotFoundException("Usuário não encontrado");
         }
     }
+
     public void excluir(Long id){
-        Usuario usuario = this.getUsario(id);
+        Usuario usuario = this.buscarUmUsuario(id);
         usuario.setStatus(StatusEnum.INATIVO);
         this.usuarioRepository.save(usuario);
     }
-
 }

@@ -1,42 +1,44 @@
-package br.senac.constructor.Usuario;
+package br.senac.constructor.usuario;
 
 
+import br.senac.constructor.permissao.PermissaoRepresentation;
 import br.senac.constructor.utils.StatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.management.Query;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public interface UsuarioRepresentation {
-
-
 
     @Data
     @Builder
     @AllArgsConstructor
     @NoArgsConstructor
     class CriarOuAtualizar{
-
-
         @NotEmpty(message = "O nome é obrigatorio")
         private String nome;
 
         @Email(message = "Email inválido")
-        private String Email;
+        private String email;
 
         @Size(min = 6, max = 20, message = "Confirmar senha é obrigatoŕio!")
+        @NotEmpty(message = "A senha é obrigatorio")
         private String senha;
+
+        @NotEmpty(message = "O confirmar senha é obrigatoria")
         private String confirmarSenha;
+
         private StatusEnum status;
-        private String criadoEM;
-        private String attEM;
+        private LocalDate attEm;
+        private Long permissao;
+
     }
     @Data
     @Builder
@@ -46,8 +48,9 @@ public interface UsuarioRepresentation {
         private String senha;
         private String confirmarSenha;
         private StatusEnum status;
-        private String criadoEM;
-        private String attEM;
+        private LocalDate criadoEM;
+        private LocalDate attEM;
+        private PermissaoRepresentation.Detalhes permissao;
 
         public static UsuarioRepresentation.Detalhes from(Usuario usuario) {
             return Detalhes.builder()
@@ -55,9 +58,24 @@ public interface UsuarioRepresentation {
                     .nome(usuario.getNome())
                     .senha(usuario.getSenha())
                     .confirmarSenha(usuario.getConfirmarSenha())
-                    .status(StatusEnum.ATIVO)
+                    .status(usuario.getStatus())
                     .criadoEM(usuario.getCriadoEm())
                     .attEM(usuario.getAttEm())
+                    .permissao(PermissaoRepresentation.Detalhes.from(usuario.getPermissao()))
+                    .build();
+        }
+    }
+
+    @Data
+    @Builder
+    class Resumo {
+        private Long id;
+        private String nome;
+
+        public static UsuarioRepresentation.Resumo from(Usuario usuario) {
+            return Resumo.builder()
+                    .id(usuario.getId())
+                    .nome(usuario.getNome())
                     .build();
         }
     }
@@ -69,15 +87,15 @@ public interface UsuarioRepresentation {
         private String senha;
         private String confirmarSenha;
         private StatusEnum status;
-        private String criadoEM;
-        private String attEM;
+        private LocalDate criadoEM;
+        private LocalDate attEM;
         private static UsuarioRepresentation.Lista from(Usuario usuario){
             return UsuarioRepresentation.Lista.builder()
                     .id(usuario.getId())
                     .nome(usuario.getNome())
                     .senha(usuario.getSenha())
                     .confirmarSenha(usuario.getConfirmarSenha())
-                    .status(StatusEnum.ATIVO)
+                    .status(usuario.getStatus())
                     .criadoEM(usuario.getCriadoEm())
                     .attEM(usuario.getAttEm())
                     .build();
