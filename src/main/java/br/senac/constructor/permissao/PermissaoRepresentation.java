@@ -24,7 +24,6 @@ public interface PermissaoRepresentation{
     @Builder
     class Detalhes {
         private String nome;
-
         public static PermissaoRepresentation.Detalhes from(Permissao permissao) {
             return PermissaoRepresentation.Detalhes.builder()
                     .nome(permissao.getNome())

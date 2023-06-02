@@ -99,7 +99,6 @@ public interface UsuarioRepresentation {
                     .criadoEM(usuario.getCriadoEm())
                     .attEM(usuario.getAttEm())
                     .build();
-
         }
         public static List<Lista> from(List<Usuario> UsuarioList){
             return UsuarioList

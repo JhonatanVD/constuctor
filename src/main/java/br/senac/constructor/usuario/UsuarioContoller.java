@@ -1,7 +1,5 @@
 package br.senac.constructor.usuario;
 
-
-
 import br.senac.constructor.utils.Paginacao;
 import com.querydsl.core.types.Predicate;
 import lombok.AllArgsConstructor;
@@ -12,7 +10,6 @@ import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.Objects;
 

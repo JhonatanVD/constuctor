@@ -54,7 +54,6 @@ public class UsuarioService {
                 .build();
         return this.usuarioRepository.save(usuarioParaAtualizar);
     }
-
     public Usuario buscarUmUsuario(Long idUsuario){
         Optional<Usuario> usuarioAtual = this.usuarioRepository.findById(idUsuario);
         if (usuarioAtual.isPresent()) {

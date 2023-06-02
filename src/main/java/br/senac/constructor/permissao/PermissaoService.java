@@ -33,7 +33,6 @@ public class PermissaoService{
 
     public Permissao atualizar(Long idPermissao, PermissaoRepresentation.CriarOuAtualizar atualizar){
         Permissao permissaoParaAtualizar = Permissao.builder()
-                .id(idPermissao)
                 .nome(atualizar.getNome())
                 .build();
 
