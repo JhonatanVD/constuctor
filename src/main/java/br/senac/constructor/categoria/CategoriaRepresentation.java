@@ -18,18 +18,18 @@ public interface CategoriaRepresentation {
     class CriarOuAtualizar{
 
         @NotEmpty(message = "A categoria é obrigatória")
-        private String categoria;
+        private String nome;
     }
     @Data
     @Builder
     class Detalhes{
 
         private Long id;
-        private String categoria;
+        private String nome;
         public static CategoriaRepresentation.Detalhes from(Categoria categoria){
             return Detalhes.builder()
                     .id(categoria.getId())
-                    .categoria(categoria.getCategoria())
+                    .nome(categoria.getNome())
                     .build();
         }
     }
@@ -37,12 +37,12 @@ public interface CategoriaRepresentation {
     @Builder
     class Lista{
         private Long id;
-        private String categoria;
+        private String nome;
 
         public static CategoriaRepresentation.Lista from(Categoria categoria){
             return CategoriaRepresentation.Lista.builder()
                     .id(categoria.getId())
-                    .categoria(categoria.getCategoria())
+                    .nome(categoria.getNome())
                     .build();
         }
         public static List<CategoriaRepresentation.Lista> from(List<Categoria> CategoriaList){

@@ -18,12 +18,12 @@ import java.util.Objects;
 @RequestMapping("/api/usuario")
 @CrossOrigin("*")
 @AllArgsConstructor
-public class UsuarioContoller {
+public class UsuarioController {
 
     private UsuarioService usuarioService;
     private UsuarioRepository usuarioRepository;
 
-    @PostMapping("/")
+    @PostMapping
      public ResponseEntity<UsuarioRepresentation.Detalhes> criarUsuario
             (@RequestBody @Valid UsuarioRepresentation.CriarOuAtualizar criar){
 
@@ -32,7 +32,6 @@ public class UsuarioContoller {
        UsuarioRepresentation.Detalhes detalhes = UsuarioRepresentation.Detalhes.from(usuario);
        return ResponseEntity.ok(detalhes);
     }
-
     @GetMapping("/all")
     public ResponseEntity<Paginacao> buscarUsuario(
             @QuerydslPredicate(root = Usuario.class) Predicate filtroURI,

@@ -17,29 +17,28 @@ import java.util.List;
 @RequestMapping("/api/cliente")
 @CrossOrigin("*")
 @AllArgsConstructor
-@Builder
 public class UserClienteController {
-    @Autowired
+
     private UserClienteService userService;
 
 
     @GetMapping("/all")
     @ApiOperation(value = "Get all users", response = List.class)
-    public List<UserCliente> getAllUsers() {
+    public List<Cliente> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
     @ApiOperation(value = "Get one", response = List.class)
-    public ResponseEntity<UserCliente> getUserById(@PathVariable Long id) {
-        UserCliente user = userService.getUserById(id);
+    public ResponseEntity<Cliente> getUserById(@PathVariable Long id) {
+        Cliente user = userService.getUserById(id);
         return ResponseEntity.ok(user);
     }
 
     @PostMapping
-    @ApiOperation(value = "create", response = UserCliente.class)
-    public ResponseEntity<UserCliente> createUser(@RequestBody ClienteRepresentation.CriarOuAtualizar cliente) {
-        UserCliente createdUser = userService.createUser(cliente);
+    @ApiOperation(value = "create", response = Cliente.class)
+    public ResponseEntity<Cliente> createUser(@RequestBody ClienteRepresentation.CriarOuAtualizar cliente) {
+        Cliente createdUser = userService.createUser(cliente);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(createdUser.getId())
@@ -48,9 +47,10 @@ public class UserClienteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserCliente> updateUser(@PathVariable Long id, @RequestBody UserCliente user) {
-        UserCliente updatedUser = userService.updateUser(id, user);
+    public ResponseEntity<Cliente> updateUser(@PathVariable Long id, @RequestBody ClienteRepresentation.CriarOuAtualizar atualizar) {
+        Cliente updatedUser = userService.updateUser(id, atualizar);
         return ResponseEntity.ok(updatedUser);
+        //verificar metodo
     }
 
     @DeleteMapping("/{id}")

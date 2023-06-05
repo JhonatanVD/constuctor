@@ -14,12 +14,11 @@ import java.util.Optional;
 @Slf4j
 public class CategoriaService {
 
-
     private CategoriaRepository categoriaRepository;
     public Categoria criarCategoria(CategoriaRepresentation.CriarOuAtualizar criar){
 
         return this.categoriaRepository.save(Categoria.builder()
-                        .categoria(criar.getCategoria())
+                        .nome(criar.getNome())
                 .build());
     }
     public Page<Categoria> buscarTodos(Pageable pageable) {
@@ -30,7 +29,7 @@ public class CategoriaService {
     }
     public Categoria atualizar(Long idCategoria, CategoriaRepresentation.CriarOuAtualizar atualizar){
         Categoria categoriaParaAtualizar = Categoria.builder()
-                .categoria(atualizar.getCategoria())
+                .nome(atualizar.getNome())
                 .build();
         return this.categoriaRepository.save(categoriaParaAtualizar);
     }

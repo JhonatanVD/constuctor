@@ -19,7 +19,7 @@ import java.util.Objects;
 public class CategoriaController {
 
     private CategoriaService categoriaService;
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<CategoriaRepresentation.Detalhes> criarCategoria
             (@RequestBody @Valid CategoriaRepresentation.CriarOuAtualizar criar){
 
@@ -57,7 +57,7 @@ public class CategoriaController {
         return ResponseEntity.ok(detalhes);
     }
     @GetMapping("/idCategoria")
-    public ResponseEntity<CategoriaRepresentation.Detalhes> buscarCategpria(@PathVariable Long idCategoria){
+    public ResponseEntity<CategoriaRepresentation.Detalhes> buscarCategoria(@PathVariable Long idCategoria){
         Categoria categoria = this.categoriaService.buscarUmaCategoria(idCategoria);
 
         CategoriaRepresentation.Detalhes detalhes = CategoriaRepresentation.Detalhes.from(categoria);

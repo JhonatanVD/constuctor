@@ -1,7 +1,5 @@
     package br.senac.constructor.clienteServico;
     
-    import br.senac.constructor.cliente.UserCliente;
-    import br.senac.constructor.permissao.Permissao;
     import lombok.*;
     
     import javax.persistence.*;

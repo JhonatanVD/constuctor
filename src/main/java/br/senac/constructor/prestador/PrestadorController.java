@@ -21,7 +21,7 @@ import java.util.Objects;
 public class PrestadorController {
 
     private PrestadorService prestadorService;
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<PrestadorRepresentation.Detalhes> criarPrestador(
             @RequestBody @Valid PrestadorRepresentation.CriarOuAtualizar criar){
 

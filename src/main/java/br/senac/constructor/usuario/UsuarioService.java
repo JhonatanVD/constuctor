@@ -1,5 +1,6 @@
 package br.senac.constructor.usuario;
 
+import br.senac.constructor.exception.BusinessException;
 import br.senac.constructor.exception.NotFoundException;
 import br.senac.constructor.permissao.Permissao;
 import br.senac.constructor.permissao.PermissaoService;
@@ -25,6 +26,7 @@ public class UsuarioService {
 
     public Usuario criarUsuario(UsuarioRepresentation.CriarOuAtualizar criar){
         Permissao permissao = this.permissaoService.buscarUmaPermissao(criar.getPermissao());
+        this.buscarPorEmail(criar.getEmail()); // valida email já existente
 
         return this.usuarioRepository.save(Usuario.builder()
                         .nome(criar.getNome())
@@ -67,5 +69,12 @@ public class UsuarioService {
         Usuario usuario = this.buscarUmUsuario(id);
         usuario.setStatus(StatusEnum.INATIVO);
         this.usuarioRepository.save(usuario);
+    }
+
+    public void buscarPorEmail(String email){
+        Optional<Usuario> usuarioAtual = this.usuarioRepository.findUserByEmail(email);
+        if (usuarioAtual.isPresent()){
+           throw new BusinessException("O e-mail %s já esta sendo ultilizado".formatted(email));
+        }
     }
 }

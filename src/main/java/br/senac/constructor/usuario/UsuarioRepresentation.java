@@ -24,7 +24,8 @@ public interface UsuarioRepresentation {
     class CriarOuAtualizar{
         @NotEmpty(message = "O nome é obrigatorio")
         private String nome;
-
+        
+        @NotEmpty(message = "O email não pode ser nulo")
         @Email(message = "Email inválido")
         private String email;
 

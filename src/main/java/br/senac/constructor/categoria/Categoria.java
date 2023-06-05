@@ -17,6 +17,6 @@ public class Categoria{
     private Long id;
 
     @NotEmpty(message = "A categoria é obrigatória")
-    @Column(name = "categoria")
-    private String categoria;
+    @Column(name = "nome")
+    private String nome;
 }

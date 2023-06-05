@@ -24,8 +24,20 @@ public interface ClienteRepresentation {
 
         private StatusEnum status;
 
-        @NotNull(message = "O usuario do cliente nao pode ser null")
+        @NotNull(message = "O usuario do cliente nao pode ser nulo")
         private Long usuario;
 
+    }
+    @Data
+    @Builder
+    class Detalhes{
+        private String contato;
+        private String documento;
+        public static ClienteRepresentation.Detalhes from(Cliente cliente){
+        return Detalhes.builder()
+                .contato(cliente.getContato())
+                .documento(cliente.getDocumento())
+                .build();
+        }
     }
 }

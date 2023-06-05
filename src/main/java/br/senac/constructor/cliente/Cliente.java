@@ -13,7 +13,8 @@ import javax.persistence.*;
 @Builder
 @Data
 @Table(name = "cliente")
-public class UserCliente {
+public class Cliente {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

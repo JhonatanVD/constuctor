@@ -30,6 +30,7 @@ public class Usuario{
 
     @Column(name= "email")
     @Email(message = "Email invalido!")
+    @NotEmpty(message = "O email não pode ser nulo")
     private String email;
 
     @Column(name= "senha")
