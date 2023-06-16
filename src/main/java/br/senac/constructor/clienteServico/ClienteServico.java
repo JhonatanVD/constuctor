@@ -1,8 +1,11 @@
     package br.senac.constructor.clienteServico;
     
+    import br.senac.constructor.cliente.Cliente;
+    import br.senac.constructor.servico.Servico;
     import lombok.*;
     
     import javax.persistence.*;
+    import javax.validation.constraints.NotNull;
     import java.math.BigDecimal;
     import java.sql.Date;
     
@@ -21,22 +24,23 @@
         private Long id;
     
         @Column(name = "valor")
+        @NotNull(message = "O valor não pode ser nulo")
         private BigDecimal valor;
     
         @Column(name = "data_servico")
         private Date data;
 
-        @Column(name = "Feedback")
-        private String feedback;
-//
-//        @Column(name = "id_cliente")
-//        @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-//        private UserCliente userCliente;
 
-//        @Column(name = "id_servico")
-//        @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-//        private Servico servico;
+        @OneToOne(cascade = CascadeType.ALL)
+        @JoinColumn(name = "id_cliente")
+        private Cliente cliente;
 
+
+        @OneToOne(cascade = CascadeType.ALL)
+        @JoinColumn(name = "id_servico")
+        private Servico servico;
     }
+
+
 
 // criar um tipo (Enum) em usuario

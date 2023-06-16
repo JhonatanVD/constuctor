@@ -72,7 +72,6 @@ public interface UsuarioRepresentation {
     class Resumo {
         private Long id;
         private String nome;
-
         public static UsuarioRepresentation.Resumo from(Usuario usuario) {
             return Resumo.builder()
                     .id(usuario.getId())

@@ -64,13 +64,11 @@ public class UsuarioService {
             throw new NotFoundException("Usuário não encontrado");
         }
     }
-
     public void excluir(Long id){
         Usuario usuario = this.buscarUmUsuario(id);
         usuario.setStatus(StatusEnum.INATIVO);
         this.usuarioRepository.save(usuario);
     }
-
     public void buscarPorEmail(String email){
         Optional<Usuario> usuarioAtual = this.usuarioRepository.findUserByEmail(email);
         if (usuarioAtual.isPresent()){

@@ -74,4 +74,15 @@ public class UsuarioController {
     public void excluirUsuario(@PathVariable("idUsuario") Long id){
         this.usuarioService.excluir(id);
     }
+
+    @GetMapping("/resumo/{idUsuario}")
+    public ResponseEntity<UsuarioRepresentation.Resumo> buscarResumoUsuario(
+            @PathVariable Long idUsuario){
+        Usuario usuario = this.usuarioService.buscarUmUsuario(idUsuario);
+
+        UsuarioRepresentation.Resumo resumo = UsuarioRepresentation.Resumo.from(usuario);
+        return ResponseEntity.ok(resumo);
+       //TESTAR METODO
+
+    }
 }

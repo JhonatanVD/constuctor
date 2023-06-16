@@ -1,9 +1,11 @@
 package br.senac.constructor.cliente;
 
 import br.senac.constructor.usuario.Usuario;
+import br.senac.constructor.utils.StatusEnum;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Getter
@@ -24,6 +26,10 @@ public class Cliente {
 
     @Column(name = "contato")
     private String contato;
+
+    @NotNull(message = "O campo status não pode ser nulo")
+    @Column(name= "status")
+    private StatusEnum status;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_usuario")

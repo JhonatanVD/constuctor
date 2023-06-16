@@ -1,5 +1,7 @@
 package br.senac.constructor.cliente;
 
+import br.senac.constructor.usuario.Usuario;
+import br.senac.constructor.usuario.UsuarioRepresentation;
 import br.senac.constructor.utils.StatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,6 +10,8 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public interface ClienteRepresentation {
     @Data
@@ -38,6 +42,27 @@ public interface ClienteRepresentation {
                 .contato(cliente.getContato())
                 .documento(cliente.getDocumento())
                 .build();
+        }
+    }
+    @Data
+    @Builder
+    class Lista{
+        private String contato;
+        private String documento;
+        private StatusEnum status;
+
+        private static ClienteRepresentation.Lista from(Cliente cliente){
+            return ClienteRepresentation.Lista.builder()
+                    .contato(cliente.getContato())
+                    .documento(cliente.getDocumento())
+                    .status(cliente.getStatus())
+                    .build();
+        }
+        public static List<ClienteRepresentation.Lista> from(List<Cliente> ClienteList){
+            return ClienteList
+                    .stream()
+                    .map(ClienteRepresentation.Lista::from)
+                    .collect(Collectors.toList());
         }
     }
 }
