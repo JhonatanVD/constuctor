@@ -23,13 +23,18 @@ public class ClienteServicoController {
     private ClienteServicoService clienteServicoService;
     @PostMapping
     public ResponseEntity<ClienteServicoRepresentation.Detalhes> criarCLienteServico(
-            @PathVariable @Valid ClienteServicoRepresentation.CriarOuAtualizar criar){
+            @RequestBody @Valid ClienteServicoRepresentation.CriarOuAtualizar criar){
 
         ClienteServico clienteServico = this.clienteServicoService.criarClienteServico(criar);
 
         ClienteServicoRepresentation.Detalhes detalhes = ClienteServicoRepresentation.Detalhes.from(clienteServico);
         return ResponseEntity.ok(detalhes);
     }
+    @PostMapping("/teste")
+    public ClienteServico teste(){
+        return new ClienteServico();
+    }
+
     @GetMapping("/all")
     public ResponseEntity<Paginacao> buscarUmClienteServico(
             @QuerydslPredicate(root = ClienteServico.class) Predicate filtroURI,
@@ -62,7 +67,7 @@ public class ClienteServicoController {
     @GetMapping("/{idClienteServico}")
     public ResponseEntity<ClienteServicoRepresentation.Detalhes> buscarUmClienteServico(
             @PathVariable Long idClienteServico){
-        ClienteServico clienteServico = this.clienteServicoService.buscarUmCLienteServico(idClienteServico);
+        ClienteServico clienteServico = this.clienteServicoService.buscarumclienteservico(idClienteServico);
 
         ClienteServicoRepresentation.Detalhes detalhes = ClienteServicoRepresentation.Detalhes.from(clienteServico);
         return ResponseEntity.ok(detalhes);

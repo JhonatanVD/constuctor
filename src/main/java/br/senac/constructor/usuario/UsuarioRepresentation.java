@@ -35,7 +35,6 @@ public interface UsuarioRepresentation {
 
         @NotEmpty(message = "O confirmar senha é obrigatoria")
         private String confirmarSenha;
-
         private StatusEnum status;
         private LocalDate attEm;
         private Long permissao;

@@ -27,7 +27,6 @@ public interface ServicoRepresentation {
 
         private String diasTrabalho;
 
-        @NotNull(message = "O campo status não pode ser nulo")
         private StatusEnum status;
         private String descricao;
         private String endereco;
@@ -52,7 +51,7 @@ public interface ServicoRepresentation {
                     .id(servico.getId())
                     .valorServico(servico.getValorServico())
                     .diasTrabalho(servico.getDiasTrabalho())
-                    .status(StatusEnum.ATIVO)
+                    .status(servico.getStatus())
                     .descricao(servico.getDescricao())
                     .endereco(servico.getEndereco())
                     .prestador(PrestadorRepresentation.Detalhes.from(servico.getPrestador()))

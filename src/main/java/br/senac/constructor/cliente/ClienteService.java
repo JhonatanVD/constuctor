@@ -1,6 +1,7 @@
 package br.senac.constructor.cliente;
 
 
+import br.senac.constructor.exception.BusinessException;
 import br.senac.constructor.exception.NotFoundException;
 import br.senac.constructor.usuario.Usuario;
 import br.senac.constructor.usuario.UsuarioService;
@@ -36,11 +37,9 @@ public class ClienteService {
 
         return clienteRepository.save(cliente);
     }
-
     public Page<Cliente> buscarTodos(Pageable pageable) {
         return  this.clienteRepository.findAll(pageable);
     }
-
     public Page<Cliente> buscarTodos(Predicate filtroUri, Pageable pageable) {
         return this.clienteRepository.findAll(pageable);
     }
@@ -49,26 +48,17 @@ public class ClienteService {
         Cliente clienteParaAtualizar  = Cliente.builder()
                 .contato(atualizar.getContato())
                 .documento(atualizar.getDocumento())
+                .status(atualizar.getStatus())
                 .build();
 
         return this.clienteRepository.save(clienteParaAtualizar);
-    }
-
-    public Cliente updateUser(Long id, ClienteRepresentation.CriarOuAtualizar atualizar) {
-        Cliente clienteParaAtualizar = Cliente.builder()
-                .contato(atualizar.getContato())
-                .documento(atualizar.getDocumento())
-                .build();
-
-        return this.clienteRepository.save(clienteParaAtualizar);
-
     }
 
     public void deleteUser(Long id) {clienteRepository.deleteById(id);
     }
 
 
-    public Cliente buscarUmUsuario(Long idCLiente) {
+    public Cliente buscarUmCliente(Long idCLiente) {
         Optional<Cliente> clienteAtual = this.clienteRepository.findById(idCLiente);
         if (clienteAtual.isPresent()) {
             return clienteAtual.get();
@@ -78,8 +68,13 @@ public class ClienteService {
     }
 
     public void excluir(Long id) {
-        Cliente cliente = this.buscarUmUsuario(id);
-        cliente.setStatus(StatusEnum.INATIVO);
-        this.clienteRepository.save(cliente);
+        Cliente cliente = this.buscarUmCliente(id);
+        if(cliente.getStatus().equals(StatusEnum.ATIVO)){
+            cliente.setStatus(StatusEnum.INATIVO);
+            this.clienteRepository.save(cliente);
+        }else{
+            throw new BusinessException("Cliente já está INATIVO");
+        }
+
     }
 }

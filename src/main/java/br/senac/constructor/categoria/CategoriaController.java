@@ -28,7 +28,7 @@ public class CategoriaController {
         CategoriaRepresentation.Detalhes detalhes = CategoriaRepresentation.Detalhes.from(categoria);
         return ResponseEntity.ok(detalhes);
     }
-    @GetMapping("/all1")
+    @GetMapping("/all")
     public ResponseEntity<Paginacao> buscarCategoria(
             @QuerydslPredicate(root = Categoria.class) Predicate filtroURI,
             @RequestParam(name = "tamanhoPagina", defaultValue = "30") int tamanhoPagina,

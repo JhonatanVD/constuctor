@@ -35,11 +35,15 @@ public interface ClienteRepresentation {
     @Data
     @Builder
     class Detalhes{
+        private Long id;
         private String contato;
         private String documento;
+        private StatusEnum status;
         public static ClienteRepresentation.Detalhes from(Cliente cliente){
         return Detalhes.builder()
+                .id(cliente.getId())
                 .contato(cliente.getContato())
+                .status(cliente.getStatus())
                 .documento(cliente.getDocumento())
                 .build();
         }

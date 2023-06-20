@@ -1,5 +1,6 @@
 package br.senac.constructor.cliente;
 
+import br.senac.constructor.servico.Servico;
 import br.senac.constructor.usuario.Usuario;
 import br.senac.constructor.usuario.UsuarioRepresentation;
 import br.senac.constructor.utils.Paginacao;
@@ -57,25 +58,25 @@ public class ClienteController {
 
         return ResponseEntity.ok(paginacao);
     }
-    @PutMapping("/{idCLiente}")
-    public ResponseEntity<ClienteRepresentation.Detalhes> atualizarCliente(@PathVariable Long idCliente, @RequestBody ClienteRepresentation.CriarOuAtualizar atualizar){
+    @PutMapping("/{idCliente}")
+    public ResponseEntity<ClienteRepresentation.Detalhes> atualizarCliente(@PathVariable Long idCliente, @RequestBody @Valid ClienteRepresentation.CriarOuAtualizar atualizar){
         Cliente ClienteAtualizado = this.clienteService.atualizar(idCliente, atualizar);
         ClienteRepresentation.Detalhes detalhes = ClienteRepresentation.Detalhes.from(ClienteAtualizado);
 
         return ResponseEntity.ok(detalhes);
     }
-    @GetMapping("/{idCLiente}")
+    @GetMapping("/{idCliente}")
     public ResponseEntity<ClienteRepresentation.Detalhes> buscarUmCliente(
-            @PathVariable Long idCLiente){
-        Cliente cliente = this.clienteService.buscarUmUsuario(idCLiente);
+            @PathVariable Long idCliente){
+        Cliente cliente = this.clienteService.buscarUmCliente(idCliente);
 
         ClienteRepresentation.Detalhes detalhes = ClienteRepresentation.Detalhes.from(cliente);
         return ResponseEntity.ok(detalhes);
     }
-    @DeleteMapping("/{idCLiente}")
+    @DeleteMapping("/{idCliente}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void excluirCLiente(@PathVariable("idCLiente") Long id){
-        this.clienteService.excluir(id);
+    public void excluirCLiente(@PathVariable("idCliente") Long idCliente){
+        this.clienteService.excluir(idCliente);
     }
 }
 

@@ -41,6 +41,7 @@ public class CategoriaService {
             throw new NotFoundException("Categoria não encontrada");
     }
     public void deleteCategoria(Long idCategoria) {
+        this.buscarUmaCategoria(idCategoria);
         categoriaRepository.deleteById(idCategoria);
     }
 }

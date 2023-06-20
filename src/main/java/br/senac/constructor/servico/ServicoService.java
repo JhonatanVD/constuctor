@@ -45,17 +45,22 @@ public class ServicoService {
     }
 
     public Servico atualizar(Long idServico, ServicoRepresentation.CriarOuAtualizar atualizar) {
-        Servico servicoParaAtualizar = Servico.builder()
+        Servico servico = this.buscarUmServico(idServico);
+        Prestador prestador = this.prestadorService.buscarUmPrestador(atualizar.getPrestador());
+        Categoria categoria = this.categoriaService.buscarUmaCategoria(atualizar.getCategoria());
+
+        Servico servicoParaAtualizar = servico.toBuilder()
                 .valorServico(atualizar.getValorServico())
                 .status(atualizar.getStatus())
                 .diasTrabalho(atualizar.getDiasTrabalho())
                 .endereco(atualizar.getEndereco())
                 .descricao(atualizar.getDescricao())
+                .prestador(prestador)
+                .categoria(categoria)
                 .build();
 
         return this.servicoRepository.save(servicoParaAtualizar);
     }
-
     public Servico buscarUmServico(Long idServico) {
         Optional<Servico> servicoAtual = this.servicoRepository.findById(idServico);
         if (servicoAtual.isPresent()) {
@@ -64,9 +69,9 @@ public class ServicoService {
             throw new NotFoundException("Serviço não encontrado");
         }
     }
-
-    public void excluir(Long id) {
-        servicoRepository.deleteById(id);
+    public void excluir(Long idServico){
+        this.buscarUmServico(idServico);
+        servicoRepository.deleteById(idServico);
     }
 }
 

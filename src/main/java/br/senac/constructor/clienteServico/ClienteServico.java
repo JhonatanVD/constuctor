@@ -2,13 +2,16 @@
     
     import br.senac.constructor.cliente.Cliente;
     import br.senac.constructor.servico.Servico;
+    import br.senac.constructor.utils.StatusEnum;
     import lombok.*;
     
     import javax.persistence.*;
+    import javax.validation.constraints.NotEmpty;
     import javax.validation.constraints.NotNull;
     import java.math.BigDecimal;
     import java.sql.Date;
-    
+    import java.time.LocalDate;
+
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
@@ -28,13 +31,15 @@
         private BigDecimal valor;
     
         @Column(name = "data_servico")
-        private Date data;
+        private LocalDate data;
 
 
         @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "id_cliente")
         private Cliente cliente;
 
+        @NotNull(message = "O Status não pode ser nulo")
+        private StatusEnum status;
 
         @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "id_servico")
