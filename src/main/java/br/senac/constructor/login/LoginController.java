@@ -2,7 +2,6 @@ package br.senac.constructor.login;
 
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,9 +17,9 @@ import javax.validation.Valid;
 @Slf4j
 public class LoginController {
     private final LoginService loginService;
+
     @PostMapping
     public ResponseEntity<LoginRepresentation.Response> login(@RequestBody @Valid LoginRepresentation.Login login){
-
         return ResponseEntity.ok(this.loginService.generateToken(login));
     }
 }

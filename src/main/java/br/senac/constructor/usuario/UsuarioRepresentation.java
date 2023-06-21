@@ -29,7 +29,7 @@ public interface UsuarioRepresentation {
         @Email(message = "Email inválido")
         private String email;
 
-        @Size(min = 6, max = 20, message = "Confirmar senha é obrigatoŕio!")
+        @Size(min = 6, message = "A senha deve ter no minimo 6 caracteres")
         @NotEmpty(message = "A senha é obrigatorio")
         private String senha;
 
@@ -45,6 +45,7 @@ public interface UsuarioRepresentation {
     class Detalhes {
         private Long id;
         private String nome;
+        private String email;
         private String senha;
         private String confirmarSenha;
         private StatusEnum status;
@@ -56,6 +57,7 @@ public interface UsuarioRepresentation {
             return Detalhes.builder()
                     .id(usuario.getId())
                     .nome(usuario.getNome())
+                    .email(usuario.getEmail())
                     .senha(usuario.getSenha())
                     .confirmarSenha(usuario.getConfirmarSenha())
                     .status(usuario.getStatus())

@@ -34,7 +34,7 @@ public class Usuario{
     private String email;
 
     @Column(name= "senha")
-    @Size(min = 6, max = 20, message = "A senha deve ter entre 6 e 20 caracteres")
+    @Size(min = 6, message = "A senha deve ter no minimo 6 caracteres")
     @NotNull(message = "A senha é obrigatória")
     private String senha;
 

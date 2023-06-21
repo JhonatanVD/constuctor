@@ -1,17 +1,12 @@
 package br.senac.constructor.prestador;
 
-
 import br.senac.constructor.exception.BusinessException;
 import br.senac.constructor.usuario.Usuario;
 import br.senac.constructor.utils.StatusEnum;
 import lombok.*;
-
-
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-
-
 @Entity
 @Getter
 @Setter

@@ -40,4 +40,27 @@ public class RestExceptionHandler {
                 .message(ex.getMessage())
                 .build();
     }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ResponseBody
+    public ResponseErro handleUnauthorizedException(UnauthorizedException exception) {
+
+        return ResponseErro.builder()
+                .statusCode(HttpStatus.UNAUTHORIZED.value())
+                .message(exception.getMessage())
+                .build();
+    }
+
+    @ExceptionHandler(JWTAuthenticationException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ResponseBody
+    public ResponseErro handleJWTAuthenticationException(JWTAuthenticationException exception) {
+
+        return ResponseErro.builder()
+                .statusCode(HttpStatus.UNAUTHORIZED.value())
+                .message(exception.getMessage())
+                .build();
+    }
+
 }

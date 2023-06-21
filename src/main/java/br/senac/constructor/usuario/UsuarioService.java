@@ -10,11 +10,10 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -23,17 +22,18 @@ import java.util.Optional;
 public class UsuarioService {
     private UsuarioRepository usuarioRepository;
     private PermissaoService permissaoService;
+    private BCryptPasswordEncoder encoder;
 
     public Usuario criarUsuario(UsuarioRepresentation.CriarOuAtualizar criar){
         Permissao permissao = this.permissaoService.buscarUmaPermissao(criar.getPermissao());
-        this.buscarPorEmail(criar.getEmail()); // valida email já existente
+        this.userAlreadyExists(criar.getEmail()); // valida email já existente
 
         return this.usuarioRepository.save(Usuario.builder()
                         .nome(criar.getNome())
                         .email(criar.getEmail())
                         .criadoEm(LocalDate.now())
-                        .senha(criar.getSenha())
-                        .confirmarSenha(criar.getConfirmarSenha())
+                        .senha(encoder.encode(criar.getSenha()))
+                        .confirmarSenha(encoder.encode(criar.getConfirmarSenha()))
                         .status(StatusEnum.ATIVO)
                         .permissao(permissao)
                 .build());
@@ -50,8 +50,8 @@ public class UsuarioService {
                 .nome(atualizar.getNome())
                 .email(atualizar.getEmail())
                 .status(atualizar.getStatus())
-                .senha(atualizar.getSenha())
-                .confirmarSenha(atualizar.getConfirmarSenha())
+                .senha(this.encoder.encode(atualizar.getSenha()))
+                .confirmarSenha(this.encoder.encode(atualizar.getConfirmarSenha()))
                 .attEm(atualizar.getAttEm())
                 .build();
         return this.usuarioRepository.save(usuarioParaAtualizar);
@@ -64,15 +64,21 @@ public class UsuarioService {
             throw new NotFoundException("Usuário não encontrado");
         }
     }
+
     public void excluir(Long id){
         Usuario usuario = this.buscarUmUsuario(id);
         usuario.setStatus(StatusEnum.INATIVO);
         this.usuarioRepository.save(usuario);
     }
-    public void buscarPorEmail(String email){
-        Optional<Usuario> usuarioAtual = this.usuarioRepository.findUserByEmail(email);
-        if (usuarioAtual.isPresent()){
+
+    public void userAlreadyExists(String email){
+        if (this.usuarioRepository.existsUserByEmail(email)) {
            throw new BusinessException("O e-mail %s já esta sendo ultilizado".formatted(email));
         }
+    }
+
+    public Usuario buscarPorEmail(String email) {
+        return this.usuarioRepository.findUserByEmail(email)
+                .orElseThrow(() -> new NotFoundException("Nenhum usuario cadastrado com o email %s".formatted(email)));
     }
 }
