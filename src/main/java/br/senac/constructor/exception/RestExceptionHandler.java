@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MultipartException;
 
 import java.util.Objects;
 
@@ -62,5 +63,25 @@ public class RestExceptionHandler {
                 .message(exception.getMessage())
                 .build();
     }
+    @ExceptionHandler(MultipartException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ResponseErro handleMultipartException(MultipartException exception) {
 
+        return ResponseErro.builder()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .message(exception.getMessage())
+                .build();
+    }
+
+    @ExceptionHandler(UploadFileException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    public ResponseErro handleUploadFileException(UploadFileException exception) {
+
+        return ResponseErro.builder()
+                .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .message(exception.getMessage())
+                .build();
+    }
 }

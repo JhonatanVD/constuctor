@@ -1,14 +1,13 @@
 package br.senac.constructor.servico;
 
 import br.senac.constructor.categoria.CategoriaRepresentation;
-import br.senac.constructor.permissao.PermissaoRepresentation;
 import br.senac.constructor.prestador.PrestadorRepresentation;
-
 import br.senac.constructor.utils.StatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;

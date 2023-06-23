@@ -10,8 +10,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Objects;
 
 @AllArgsConstructor
@@ -24,7 +26,8 @@ public class ServicoController {
     private ServicoRepository servicoRepository;
     @PostMapping
     public ResponseEntity<ServicoRepresentation.Detalhes> criarServico(
-            @RequestBody @Valid ServicoRepresentation.CriarOuAtualizar criar){
+            @RequestBody @Valid ServicoRepresentation.CriarOuAtualizar criar,
+            @RequestHeader List<MultipartFile> fileList){
 
         Servico servico = this.servicoService.criarServico(criar);
 
