@@ -1,9 +1,9 @@
-# Compiled class file
+# Compiled class imagem
 *.class
 /target
 /.idea
 
-# Log file
+# Log imagem
 *.log
 
 # BlueJ files

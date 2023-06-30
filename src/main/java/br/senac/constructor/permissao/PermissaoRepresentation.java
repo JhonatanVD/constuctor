@@ -23,12 +23,9 @@ public interface PermissaoRepresentation{
     @Data
     @Builder
     class Detalhes {
-        private Long id;
         private String nome;
-
         public static PermissaoRepresentation.Detalhes from(Permissao permissao) {
             return PermissaoRepresentation.Detalhes.builder()
-                    .id(permissao.getId())
                     .nome(permissao.getNome())
                     .build();
         }

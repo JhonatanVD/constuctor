@@ -16,7 +16,8 @@ import javax.validation.constraints.NotNull;
 public class Permissao {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "idPermissao")
     private Long id;
 
     @Column(name = "nome")

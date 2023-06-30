@@ -1,6 +1,6 @@
 package br.senac.constructor.permissao;
 
-import br.senac.constructor.exceptions.NotFoundException;
+import br.senac.constructor.exception.NotFoundException;
 import com.querydsl.core.types.Predicate;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +33,6 @@ public class PermissaoService{
 
     public Permissao atualizar(Long idPermissao, PermissaoRepresentation.CriarOuAtualizar atualizar){
         Permissao permissaoParaAtualizar = Permissao.builder()
-                .id(idPermissao)
                 .nome(atualizar.getNome())
                 .build();
 
